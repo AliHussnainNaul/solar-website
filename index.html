@@ -160,29 +160,17 @@
   .pain-card p { font-size: 15px; color: var(--text-mid); line-height: 1.6; }
 
   /* ── VSL ── */
-  .vsl-section { background: var(--navy); text-align: center; }
-  .vsl-section h2 { color: var(--white); margin-bottom: 16px; font-size: clamp(28px, 4vw, 42px); }
-  .vsl-section p { color: rgba(255,255,255,0.6); margin-bottom: 40px; font-size: 18px; }
   .vsl-frame {
     background: var(--navy-mid);
     border: 1px solid rgba(245,166,35,0.2);
     border-radius: 16px;
-    max-width: 760px; margin: 0 auto 40px;
-    aspect-ratio: 16/9;
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
+    max-width: 760px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
   }
-  .vsl-placeholder { text-align: center; }
-  .play-btn {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: var(--accent); display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 16px; cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 0 12px rgba(245,166,35,0.15);
-  }
-  .play-btn:hover { transform: scale(1.08); box-shadow: 0 0 0 18px rgba(245,166,35,0.12); }
-  .play-btn svg { width: 28px; height: 28px; fill: var(--navy); margin-left: 4px; }
-  .vsl-caption { color: rgba(255,255,255,0.4); font-size: 13px; }
 
   /* ── PROBLEM / SOLUTION ── */
   .ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px; }
@@ -252,11 +240,10 @@
   .t-author { display: flex; align-items: center; gap: 12px; }
   .t-avatar {
     width: 42px; height: 42px; border-radius: 50%;
-    background: var(--navy); display: flex; align-items: center; justify-content: center;
-    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--accent); flex-shrink: 0;
+    overflow: hidden; flex-shrink: 0;
   }
+  .t-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .t-name { font-weight: 600; font-size: 14px; }
-  .t-role { font-size: 13px; color: var(--text-muted); }
   .result-numbers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 860px; margin: 48px auto 0; }
   .rnum-card {
     background: var(--navy); border-radius: 14px; padding: 28px; text-align: center;
@@ -355,10 +342,85 @@
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  @media (max-width: 600px) {
-    section { padding: 72px 5%; }
-    .dream-box { padding: 28px 24px; }
-    .cta-box { padding: 40px 24px; }
+  /* ── Mobile nav ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--white); border-radius: 2px;
+    transition: all 0.25s;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    html, body { overflow-x: hidden; max-width: 100%; }
+
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+
+    .hero { padding: 72px 5% 60px; }
+    .hero h1 { font-size: clamp(1.55rem, 6vw, 2.2rem); letter-spacing: -0.5px; }
+    .hero-sub { font-size: 16px; }
+
+    .vsl-frame { border-radius: 10px; }
+
+    .hero-ctas { flex-direction: column; align-items: stretch; }
+    .hero-ctas .btn-primary,
+    .hero-ctas .btn-ghost { text-align: center; width: 100%; }
+
+    .hero-pills { gap: 12px; }
+
+    .dream-box { padding: 24px 20px; margin-top: 36px; }
+    .dream-box .quote { font-size: 17px; }
+
+    section { padding: 64px 5%; }
+    .section-inner { max-width: 100%; }
+
+    .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .stat-num { font-size: 32px; }
+
+    .pain-grid { grid-template-columns: 1fr; }
+    .ps-grid { grid-template-columns: 1fr; }
+
+    .step-item { flex-direction: column; gap: 14px; }
+
+    .testimonials { grid-template-columns: 1fr; }
+    .result-numbers { grid-template-columns: repeat(2, 1fr); }
+
+    .dream-grid { grid-template-columns: 1fr; }
+
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .cta-box { padding: 36px 20px; }
+    .cta-pills-row { flex-direction: column; align-items: center; gap: 10px; }
+
+    .avail-banner { flex-direction: column; text-align: center; gap: 10px; padding: 20px; }
+
+    footer { flex-direction: column; text-align: center; padding: 32px 20px; }
+
+    /* Touch-friendly buttons */
+    .btn-primary, .btn-ghost { min-height: 52px; padding: 14px 24px; font-size: 15px; }
+    .nav-cta { min-height: 40px; }
+  }
+
+  @media (max-width: 480px) {
+    nav { height: 56px; }
+    .hero { padding: 60px 5% 48px; }
+    .hero h1 { font-size: 1.45rem; }
+    section { padding: 52px 5%; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .result-numbers { grid-template-columns: 1fr 1fr; }
+    .metrics-grid { grid-template-columns: 1fr; }
+    .cta-box { border-radius: 14px; }
+    h2.section-title { font-size: clamp(24px, 7vw, 36px); }
   }
 </style>
 </head>
@@ -367,23 +429,38 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Cogniva Systems</div>
-  <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <a href="#problem">The Problem</a>
     <a href="#how">How It Works</a>
     <a href="#results">Results</a>
     <a href="#cta" class="nav-cta">Book a Call</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ① HERO / HEADLINE + OFFER -->
 <section class="hero">
   <div class="hero-eyebrow">For Solar Companies</div>
-  <h1>Your Leads Are Going Cold<br>While You Sleep. <span>We Fix That.</span></h1>
-  <p class="hero-sub">An AI system that contacts every new lead within 60 seconds, reactivates your dead pipeline, and follows up relentlessly until they show up — so you close more deals without hiring more staff.</p>
-  <div class="hero-ctas">
-    <a href="#cta" class="btn-primary">Book a Free Strategy Call →</a>
-    <a href="#problem" class="btn-ghost">See the Problem</a>
+  <h1>No retainer. No setup fee. Pay only for <span>confirmed appointments</span> we book — new leads or dead ones. <span>No-shows don't count.</span></h1>
+
+  <!-- VSL — replace src with your actual video embed URL (YouTube, Loom, Wistia, etc.) -->
+  <div class="vsl-frame" style="margin: 36px auto 32px;">
+    <iframe
+      src="about:blank"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+      title="See How Cogniva Systems Works"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;">
+    </iframe>
   </div>
+
+  <div class="hero-ctas">
+    <a href="#cta" class="btn-primary">Book a Call →</a>
+  </div>
+
   <div class="hero-pills">
     <span class="hero-pill">&lt;60s First Response</span>
     <span class="hero-pill">Runs 24/7</span>
@@ -423,23 +500,6 @@
   </div>
 </div>
 
-<!-- ② VSL VIDEO -->
-<section class="vsl-section" id="vsl">
-  <div class="section-inner">
-    <div class="section-label dark">Watch This First</div>
-    <h2>See Exactly How It Works <br>In Under 4 Minutes</h2>
-    <p>A quick walkthrough of the full AI system — from the moment a lead fills out a form to the moment they show up to the consultation.</p>
-    <div class="vsl-frame">
-      <div class="vsl-placeholder">
-        <div class="play-btn">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
-        <p class="vsl-caption">Your VSL video goes here · Recommended: 3–5 minutes</p>
-      </div>
-    </div>
-    <a href="#cta" class="btn-primary">Claim Your Free Audit →</a>
-  </div>
-</section>
 
 <!-- ③ CTA #1 -->
 <section style="background: var(--off-white); padding: 64px 5%; text-align: center;">
@@ -579,10 +639,9 @@
         <div class="stars">★★★★★</div>
         <blockquote>"We had 340 dead leads sitting in our CRM. Within 3 weeks of reactivation, <strong>we closed 11 of them</strong>. That's $87,000 in revenue we had completely written off."</blockquote>
         <div class="t-author">
-          <div class="t-avatar">MK</div>
+          <div class="t-avatar"><img src="https://i.pravatar.cc/84?img=12" alt="Marcus K."></div>
           <div>
             <div class="t-name">Marcus K.</div>
-            <div class="t-role">Owner, SunPath Solar — Texas</div>
           </div>
         </div>
       </div>
@@ -590,10 +649,9 @@
         <div class="stars">★★★★★</div>
         <blockquote>"Our show-up rate went from 38% to <strong>71% in the first month</strong>. The AI just keeps following up. Clients tell us we're the most responsive company they've dealt with."</blockquote>
         <div class="t-author">
-          <div class="t-avatar">JR</div>
+          <div class="t-avatar"><img src="https://i.pravatar.cc/84?img=47" alt="Jamie R."></div>
           <div>
             <div class="t-name">Jamie R.</div>
-            <div class="t-role">Sales Director, BrightWave Energy — Florida</div>
           </div>
         </div>
       </div>
@@ -601,10 +659,9 @@
         <div class="stars">★★★★★</div>
         <blockquote>"I was spending $14K/month on ads and closing 4–5 deals. After the system went live, <strong>same spend, 11 deals</strong>. The leads were always there. We just weren't capturing them."</blockquote>
         <div class="t-author">
-          <div class="t-avatar">DL</div>
+          <div class="t-avatar"><img src="https://i.pravatar.cc/84?img=68" alt="David L."></div>
           <div>
             <div class="t-name">David L.</div>
-            <div class="t-role">CEO, Apex Solar Solutions — California</div>
           </div>
         </div>
       </div>
@@ -766,6 +823,29 @@ const observer = new IntersectionObserver(entries => {
     observer.observe(el);
   });
 });
+
+// Mobile nav toggle
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', () => {
+    const open = navLinks.style.display === 'flex';
+    navLinks.style.display = open ? '' : 'flex';
+    navLinks.style.flexDirection = 'column';
+    navLinks.style.position = 'fixed';
+    navLinks.style.inset = '56px 0 0 0';
+    navLinks.style.background = 'var(--navy)';
+    navLinks.style.alignItems = 'center';
+    navLinks.style.justifyContent = 'center';
+    navLinks.style.gap = '28px';
+    navLinks.style.zIndex = '999';
+    navLinks.style.fontSize = '20px';
+    if (open) { navLinks.removeAttribute('style'); }
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.removeAttribute('style'));
+  });
+}
 </script>
 </body>
 </html>
